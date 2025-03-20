@@ -103,15 +103,7 @@ configure_terminal_app() {
         return
     fi
 
-    echo "Please ensure Terminal has full disk access:"
-    echo "1. Open System Preferences"
-    echo "2. Go to Security & Privacy > Privacy"
-    echo "3. Select 'Full Disk Access' from the left sidebar"
-    echo "4. Click the lock icon to make changes"
-    echo "5. Add Terminal to the list if it's not already there"
-    echo "6. Ensure the checkbox next to Terminal is checked"
-    echo "Press Enter when you've completed these steps..."
-    read -r
+    open "$theme_path"
 
     # Import the theme
     osascript <<EOD
