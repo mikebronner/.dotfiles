@@ -98,9 +98,23 @@ configure_terminal_app() {
     echo "Configuring Terminal.app to use MesloLGS NF font and Earthsong theme..."
     local theme_path="$SCRIPT_DIR/terminal/themes/earthsong.terminal"
 
-    if [ -f "$theme_path" ]; then
-        # Import the theme
-        osascript <<EOD
+    if [ ! -f "$theme_path" ]; then
+        echo "Earthsong theme file not found at $theme_path. Skipping theme configuration."
+        return
+    fi
+
+    echo "Please ensure Terminal has full disk access:"
+    echo "1. Open System Preferences"
+    echo "2. Go to Security & Privacy > Privacy"
+    echo "3. Select 'Full Disk Access' from the left sidebar"
+    echo "4. Click the lock icon to make changes"
+    echo "5. Add Terminal to the list if it's not already there"
+    echo "6. Ensure the checkbox next to Terminal is checked"
+    echo "Press Enter when you've completed these steps..."
+    read -r
+
+    # Import the theme
+    osascript <<EOD
 tell application "Terminal"
     try
         set themeName to "Earthsong"
@@ -113,7 +127,7 @@ tell application "Terminal"
                 set settings set themeName to newSettings
             on error errMsg
                 log "Error importing theme: " & errMsg
-                return
+                error "Failed to import theme. Error: " & errMsg
             end try
         end if
 
@@ -139,13 +153,15 @@ tell application "Terminal"
         log "Terminal settings updated successfully"
     on error errMsg
         log "Error configuring Terminal: " & errMsg
+        error "Failed to configure Terminal. Error: " & errMsg
     end try
 end tell
 EOD
 
-        echo "Terminal.app configuration attempt completed. Check the system log for details."
+    if [ $? -eq 0 ]; then
+        echo "Terminal.app configuration completed successfully."
     else
-        echo "Earthsong theme file not found at $theme_path. Skipping theme configuration."
+        echo "Error occurred while configuring Terminal.app. Please check the system log for details."
     fi
 
     # Verify the settings
