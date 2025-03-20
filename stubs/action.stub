@@ -1,0 +1,17 @@
+<?php
+
+declare(strict+types=1);
+
+namespace {{ namespace }};
+
+use Lorisleiva\Actions\Concerns\AsAction;
+
+class {{ class }}
+{
+    use AsAction;
+
+    public function handle()
+    {
+        // ...
+    }
+}
