@@ -102,39 +102,48 @@ configure_terminal_app() {
         # Import the theme
         osascript <<EOD
 tell application "Terminal"
-    set themeName to "Earthsong"
-    set themePath to POSIX file "$theme_path"
+    try
+        set themeName to "Earthsong"
+        set themePath to POSIX file "$theme_path"
 
-    -- Import the theme if it doesn't exist
-    if not (exists settings set themeName) then
-        set newSettings to (read file themePath as «class UTF8»)
-        set settings set themeName to newSettings
-    end if
+        -- Import the theme if it doesn't exist
+        if not (exists settings set themeName) then
+            try
+                set newSettings to (read file themePath as «class UTF8»)
+                set settings set themeName to newSettings
+            on error errMsg
+                log "Error importing theme: " & errMsg
+                return
+            end try
+        end if
 
-    set earthsongSettings to settings set themeName
+        set earthsongSettings to settings set themeName
 
-    -- Set as default and startup
-    set default settings to earthsongSettings
-    set startup settings to earthsongSettings
+        -- Set as default and startup
+        set default settings to earthsongSettings
+        set startup settings to earthsongSettings
 
-    -- Configure font
-    set font name of earthsongSettings to "MesloLGS NF"
-    set font size of earthsongSettings to 16
+        -- Configure font
+        set font name of earthsongSettings to "MesloLGS NF"
+        set font size of earthsongSettings to 16
 
-    -- Apply to current windows
-    repeat with w in every window
-        set current settings of tabs of w to earthsongSettings
-    end repeat
+        -- Apply to current windows
+        repeat with w in every window
+            set current settings of tabs of w to earthsongSettings
+        end repeat
 
-    -- Save changes
-    do shell script "defaults write com.apple.Terminal 'Default Window Settings' -string " & themeName
-    do shell script "defaults write com.apple.Terminal 'Startup Window Settings' -string " & themeName
+        -- Save changes
+        do shell script "defaults write com.apple.Terminal 'Default Window Settings' -string " & themeName
+        do shell script "defaults write com.apple.Terminal 'Startup Window Settings' -string " & themeName
 
-    log "Terminal settings updated successfully"
+        log "Terminal settings updated successfully"
+    on error errMsg
+        log "Error configuring Terminal: " & errMsg
+    end try
 end tell
 EOD
 
-        echo "Terminal.app configured with Earthsong theme and MesloLGS NF font."
+        echo "Terminal.app configuration attempt completed. Check the system log for details."
     else
         echo "Earthsong theme file not found at $theme_path. Skipping theme configuration."
     fi
@@ -143,8 +152,12 @@ EOD
     echo "Verifying Terminal settings..."
     osascript <<EOD
 tell application "Terminal"
-    log "Default settings: " & (name of default settings)
-    log "Startup settings: " & (name of startup settings)
+    try
+        log "Default settings: " & (name of default settings)
+        log "Startup settings: " & (name of startup settings)
+    on error errMsg
+        log "Error verifying settings: " & errMsg
+    end try
 end tell
 EOD
 }
