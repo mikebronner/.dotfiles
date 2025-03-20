@@ -5,6 +5,28 @@ set -e  # Exit immediately if a command exits with a non-zero status.
 REPO_URL="https://github.com/mikebronner/.files.git"
 INSTALL_DIR="$HOME/.files"
 
+install_or_update_git() {
+    if ! command -v git &> /dev/null; then
+        echo "Git is not installed. Installing Git via Xcode Command Line Tools..."
+        xcode-select --install
+
+        # Wait for the installation to complete
+        echo "Please complete the Xcode Command Line Tools installation."
+        echo "Press any key when the installation is finished..."
+        read -n 1 -s
+
+        if command -v git &> /dev/null; then
+            echo "Git has been successfully installed."
+        else
+            echo "Git installation failed. Please install Git manually and run this script again."
+            exit 1
+        fi
+    else
+        echo "Git is already installed. Xcode Command Line Tools manages updates automatically."
+    fi
+}
+install_or_update_git
+
 # Clone the repository if it doesn't exist
 if [ ! -d "$INSTALL_DIR" ]; then
     echo "Cloning repository..."

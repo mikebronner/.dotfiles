@@ -77,7 +77,7 @@ ZSH_THEME="powerlevel10k/powerlevel10k"
 # Custom plugins may be added to $ZSH_CUSTOM/plugins/
 # Example format: plugins=(rails git textmate ruby lighthouse)
 # Add wisely, as too many plugins slow down shell startup.
-plugins=(git you-should-use zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git artisan you-should-use zsh-autosuggestions zsh-syntax-highlighting)
 
 fpath+=${ZSH_CUSTOM:-${ZSH:-~/.oh-my-zsh}/custom}/plugins/zsh-completions/src
 source $ZSH/oh-my-zsh.sh
@@ -123,10 +123,6 @@ alias ci="composer install"
 alias cda="composer dump-autoload -o"
 
 fpath=($fpath "$HOME/.zfunctions")
-
-
-
-
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
