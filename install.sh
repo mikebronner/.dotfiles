@@ -2,6 +2,20 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status.
 
+REPO_URL="https://github.com/mikebronner/.files.git"
+INSTALL_DIR="$HOME/.files"
+
+# Clone the repository if it doesn't exist
+if [ ! -d "$INSTALL_DIR" ]; then
+    echo "Cloning repository..."
+    git clone "$REPO_URL" "$INSTALL_DIR"
+    cd "$INSTALL_DIR"
+else
+    echo "Repository already exists. Updating..."
+    cd "$INSTALL_DIR"
+    git pull
+fi
+
 SCRIPT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 # Check if zsh is already the default shell
