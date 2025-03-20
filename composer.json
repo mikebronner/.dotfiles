@@ -9,19 +9,20 @@
     ],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.4",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/prompts": "^0.3.5",
+        "laravel/tinker": "^2.10.1",
+        "lorisleiva/laravel-actions": "^2.9"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
         "laravel/pail": "^1.2.2",
-        "laravel/pint": "^1.13",
-        "laravel/sail": "^1.41",
         "mockery/mockery": "^1.6",
         "nunomaduro/collision": "^8.6",
         "pestphp/pest": "^3.7",
-        "pestphp/pest-plugin-laravel": "^3.1"
+        "pestphp/pest-plugin-laravel": "^3.1",
+        "slevomat/coding-standard": "^8.16"
     },
     "autoload": {
         "psr-4": {
@@ -66,6 +67,7 @@
         "preferred-install": "dist",
         "sort-packages": true,
         "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true,
             "pestphp/pest-plugin": true,
             "php-http/discovery": true
         }
