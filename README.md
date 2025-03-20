@@ -1,10 +1,10 @@
-# .files
+# Mike Bronner's 👨‍💻 .dotfiles
 Development configuration and terminal setup.
 
 ## Installation
 
 ```sh
-bash -c "$(curl -fsSL https://raw.githubusercontent.com/mikebronner/.files/main/install.sh)"
+bash -c "$(curl -fsSL https://raw.githubusercontent.com/mikebronner/.dotfiles/main/install.sh)"
 ```
 
 ## Features

@@ -2,8 +2,8 @@
 
 set -e  # Exit immediately if a command exits with a non-zero status.
 
-REPO_URL="https://github.com/mikebronner/.files.git"
-INSTALL_DIR="$HOME/.files"
+REPO_URL="https://github.com/mikebronner/.dotfiles.git"
+INSTALL_DIR="$HOME/.dotfiles"
 
 install_or_update_git() {
     if ! command -v git &> /dev/null; then
