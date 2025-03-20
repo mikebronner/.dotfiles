@@ -27,6 +27,46 @@ install_or_update_git() {
 }
 install_or_update_git
 
+configure_ssh_and_git() {
+    echo "Configuring SSH keys and Git..."
+
+    # Ensure .ssh directory exists
+    mkdir -p "$HOME/.ssh"
+
+    # Add all SSH keys to Apple Keychain
+    for key in "$HOME/.ssh"/*; do
+        if [[ -f "$key" && "$key" != *.pub ]]; then
+            ssh-add --apple-use-keychain "$key"
+            echo "Added SSH key: $key to Apple Keychain"
+        fi
+    done
+
+    # Configure SSH to use Apple Keychain
+    if ! grep -q "UseKeychain yes" "$HOME/.ssh/config" 2>/dev/null; then
+        echo "UseKeychain yes" >> "$HOME/.ssh/config"
+        echo "AddKeysToAgent yes" >> "$HOME/.ssh/config"
+        echo "Updated ~/.ssh/config to use Apple Keychain"
+    fi
+
+    # Configure Git to use SSH with Apple Keychain
+    git config --global credential.helper osxkeychain
+    echo "Configured Git to use Apple Keychain for credentials"
+
+    # Configure Git user information if not already set
+    if [ -z "$(git config --global user.name)" ]; then
+        read -p "Enter your Git username: " git_username
+        git config --global user.name "$git_username"
+    fi
+
+    if [ -z "$(git config --global user.email)" ]; then
+        read -p "Enter your Git email: " git_email
+        git config --global user.email "$git_email"
+    fi
+
+    echo "Git configuration complete"
+}
+configure_ssh_and_git
+
 # Clone the repository if it doesn't exist
 if [ ! -d "$INSTALL_DIR" ]; then
     echo "Cloning repository..."

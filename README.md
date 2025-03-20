@@ -1,5 +1,7 @@
 # Mike Bronner's 👨‍💻 .dotfiles
-Development configuration and terminal setup.
+One thing that has bugged me for years what keeping all my computers set up the same way for web
+development. My goal with this project is to have a single command that will prep any mac for web
+development, without me having to worry about getting everything set up.
 
 ## Installation
 
@@ -23,3 +25,8 @@ Running the script will perform the following actions:
 5. Install the Earthsong terminal theme.
 6. Install the MesloLGS terminal font.
 7. Apply the terminal font configurations to VSCode.
+8. Import all SSH keys into Apple Keychain for syncronization and automatic use.
+
+## Other Consideration
+- SSH keys are an integral part of any developer's daily routine. To make these sync seamlessly
+between all my macs I import them into Apple Keychain and have git access them there automatically.
